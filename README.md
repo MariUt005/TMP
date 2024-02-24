@@ -33,6 +33,7 @@ rectangle Касса {
 ## Практическая работа №1
 ```
 @startuml
+!theme spacelab
 class Покупатель {
 + ФИО
 + Деньги
