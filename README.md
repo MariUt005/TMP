@@ -27,7 +27,7 @@ rectangle Касса {
 }
 @enduml
 ```
-![Изображение](https://github.com/MariUt005/TMP/blob/405d48c8d501867228643389f4024e7c56295469/%D0%BF%D1%801.png)
+![](01.png)
 
 
 ## Практическая работа №1
