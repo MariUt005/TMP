@@ -66,7 +66,7 @@ rectangle {
 }
 @enduml
 ```
-
+![](пр2.png)
 
 ```
 @startuml
