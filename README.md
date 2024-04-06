@@ -210,3 +210,39 @@ node Банк
 ```
 
 ![](пр2_2.png)
+
+## Практическая работа №3
+### Стратегия
+```
+class AuthMethod:
+    def auth(self):
+        ...
+
+class Auth0(AuthMethod):
+    def auth(self):
+        print("Method 0")
+
+class Auth1(AuthMethod):
+    def auth(self):
+        print("Method 1")
+
+class Auth2(AuthMethod):
+    def auth(self):
+        print("Method2")
+
+class AuthRun:
+    def __init__(self, methodN):
+        self.method = self.chooseMethod(methodN)
+    def chooseMethod(self, N):
+        self.method = AuthMethod()
+        if N == 0:
+            self.method = Auth0()
+        if N == 1:
+            self.method = Auth1()
+        if N == 2:
+            self.method = Auth2()
+        return self.method.auth
+
+a = AuthRun(0)
+a.method()
+```
