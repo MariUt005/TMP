@@ -167,3 +167,24 @@ stop
 ```
 
 ![](пр2.png)
+
+### Диаграмма последовательностей
+```
+@startuml
+participant Покупатель as Foo
+participant Продавец as Foo1
+participant Терминал as Foo2
+participant Банк as Foo3
+
+Foo -> Foo1 : Выбрать место
+Foo1 -> Foo2 : Включить терминал
+Foo1 -> Foo : Разрешить оплату
+Foo -> Foo2 : Приложить карту и ввести пинкод
+Foo2 -> Foo3 : Оплатить
+Foo3 -> Foo2 : Подтвердить оплату
+Foo2 -> Foo1 : Сообщить о завершении оплаты
+Foo1 -> Foo : Выдать билет
+@enduml
+```
+
+![](пр2_1.png)
