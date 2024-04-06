@@ -246,3 +246,26 @@ class AuthRun:
 a = AuthRun(0)
 a.method()
 ```
+
+### Шаблонный метод
+```
+class Algo:
+    def step1(self):
+        pass
+    def step2(self):
+        pass
+    
+class A(Algo):
+    def step_1(self):
+        print('Step A 1')
+    def step_2(self):
+        print('Step A 2')
+
+class B(Algo):
+    def step_1(self):
+        print('Step B 1')
+    def step_2(self):
+        print('Step B 2')
+    def something(self):
+        print('do something else')
+```
