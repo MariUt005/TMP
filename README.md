@@ -269,3 +269,41 @@ class B(Algo):
     def something(self):
         print('do something else')
 ```
+
+## Практическая работа 4
+
+### Итератор
+![image](https://github.com/MariUt005/TMP/assets/60814898/627929f7-77e3-420c-ae44-7eac6c086df0)
+```
+class Item:
+    def __init__(self, number):
+        self.number = number
+    def __str__(self):
+        return f"item #{self.number}"
+
+class Iterator:
+    def __init__(self, item):
+        self._item = item
+        self._index = 0
+    def next(self):
+        item = self._item[self._index]
+        self._index += 1
+        return item
+    def has_next(self):
+        return False if self._index >= len(self._item) else True
+
+class Box:
+    def __init__(self, amount_num: int = 10):
+        self.num = [Item(it+1) for it in range(amount_num)]
+        print(f"В коробке {amount_num} item")
+    def amount_num(self):
+        return len(self.num)
+    def iterator(self):
+        return Iterator(self.num)
+
+item = Box(10)
+iterator = item.iterator()
+while iterator.has_next():
+    item = iterator.next()
+    print(str(item))
+```
