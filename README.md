@@ -273,7 +273,7 @@ class B(Algo):
 ## Практическая работа 4
 
 ### Итератор
-![image](https://github.com/MariUt005/TMP/assets/60814898/627929f7-77e3-420c-ae44-7eac6c086df0)
+![image](https://github.com/MariUt005/TMP/assets/60814898/fd7aae82-829e-46c4-8941-8b459560bca4)
 ```
 class Item:
     def __init__(self, number):
