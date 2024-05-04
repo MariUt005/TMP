@@ -307,3 +307,43 @@ while iterator.has_next():
     item = iterator.next()
     print(str(item))
 ```
+
+### Посетитель
+![image](https://github.com/MariUt005/TMP/assets/60814898/3c56d307-bdf4-4fb9-9040-31cd78c0e395)
+
+```
+class A:
+    def __init__(self):
+        self.a = 'AAAA'
+class B:
+    def __init__(self):
+        self.b = 'BBBB'
+
+class C:
+    def __init__(self):
+        self.c = 'CCCC'
+
+class Visitor:
+    def method(self, item):
+        if isinstance(item, A):
+            self.methodA(item)
+        elif isinstance(item, B):
+            self.methodB(item)
+        elif isinstance(item, C):
+            self.methodC(item)
+        else: print("Неизвестный класс")
+    def methodA(self, item):
+        print(item.a)
+    def methodB(self, item):
+        print(item.b)
+    def methodC(self, item):
+        print(item.c)
+
+a = A()
+b = B()
+c = C()
+v = Visitor()
+v.method(a)
+v.method(b)
+v.method(c)
+```
