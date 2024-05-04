@@ -452,7 +452,7 @@ class Builder():
     def add_meal(self) -> None: pass
     def add_topping(self) -> None: pass
     def prepare_botbread(self) -> None: pass
-    def get_bur(self) -> pizza: pass
+    def get_piz(self) -> pizza: pass
 
 class Director:
     def __init__(self):
@@ -479,7 +479,7 @@ class RichPiz(Builder):
         self.piz.topping.append(Product.nam[1])
     def prepare_botbread(self) -> None:
         self.piz.botbread = Product.bread[0]
-    def get_bur(self) -> pizza:
+    def get_piz(self) -> pizza:
         return self.piz
 
 class DefaultPiz(Builder):
@@ -493,7 +493,7 @@ class DefaultPiz(Builder):
         self.piz.topping.append(Product.nam[0])
     def prepare_botbread(self) -> None:
         self.piz.botbread = Product.bread[1]
-    def get_bur(self) -> pizza:
+    def get_piz(self) -> pizza:
         return self.piz
 
 director = Director()
@@ -505,8 +505,8 @@ else:
     builder = DefaultPiz()
 director.set_builder(builder)
 director.make_bur()
-burger = builder.get_bur()
-burger.printer()
+pizza = builder.get_piz()
+pizza.printer()
 ```
 
 ### Адаптер
