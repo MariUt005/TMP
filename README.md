@@ -347,3 +347,254 @@ v.method(a)
 v.method(b)
 v.method(c)
 ```
+
+## Практическая работа 5
+
+### Абстрактная фабрика
+```
+class Drink:
+    def __init__(self, item):
+        self.item = item
+    def create(self): pass
+class Food:
+    def __init__(self, item):
+        self.item = item
+    def create(self): pass
+
+class LunchDrink:
+    def __init__(self):
+        self.item = "Обед"
+    def create(self):
+        print(f'Создан напиток для приема: {self.item}')
+class LunchFood:
+    def __init__(self):
+        self.item = "Обед"
+    def create(self):
+        print(f'Создана еда для приема: {self.item}')
+class DinnerDrink:
+    def __init__(self):
+        self.item = "Ужин"
+    def create(self):
+        print(f'Создан напиток для приема: {self.item}')
+class DinnerFood:
+    def __init__(self):
+        self.item = "Ужин"
+    def create(self):
+        print(f'Создана еда для приема: {self.item}')
+
+class AbstractMeal:
+    def getDrink(self): pass
+    def getFood(self): pass
+
+class DinnerFactory(AbstractMeal):
+    def getDrink(self):
+        return DinnerDrink()
+    def getFood(self):
+        return DinnerFood()
+class LunchFactory(AbstractMeal):
+    def getDrink(self):
+        return LunchDrink()
+    def getFood(self):
+        return LunchFood()
+
+class Application:
+    def __init__(self, meal):
+        self.meal = meal
+    def create_gui(self):
+        drink = self.meal.getDrink()
+        food = self.meal.getFood()
+        drink.create()
+        food.create()
+
+def create_factory(objectname: str):
+    tabled = {
+        "Обед": DinnerFactory,
+        "Ужин": LunchFactory
+    }
+    return tabled[objectname]()
+
+objectname = "Обед"
+cr = create_factory(objectname)
+app = Application(cr)
+app.create_gui()
+
+objectname = "Ужин"
+cr = create_factory(objectname)
+app = Application(cr)
+app.create_gui()
+```
+
+### Строитель
+
+```
+class Product:
+    bread = ["Толстое", "Тонкое"]
+    meal = ['Ветчина', 'Пеперони']
+    nam = ['Сыр', 'Огурцы']
+    souse = ["Кетчуп", "Томатная паста"]
+
+class pizza:
+    def __init__(self, name):
+        self.name = name
+        self.meal = None
+        self.topping = []
+        self.souse = None
+        self.botbread = None
+    def printer(self):
+        print(f'Название:{self.name}\n' \
+              f'Мясо:{self.meal}\n' \
+              f'Топинги:{[it for it in self.topping]}\n' \
+              f'Соус:{self.souse}\n' \
+              f'Тесто:{self.botbread}\n')
+
+class Builder():
+    def add_sauce(self) -> None: pass
+    def add_meal(self) -> None: pass
+    def add_topping(self) -> None: pass
+    def prepare_botbread(self) -> None: pass
+    def get_bur(self) -> pizza: pass
+
+class Director:
+    def __init__(self):
+        self.builder = None
+    def set_builder(self, builder: Builder):
+        self.builder = builder
+    def make_bur(self):
+        if not self.builder:
+            raise ValueError("Builder didn't set")
+        self.builder.add_sauce()
+        self.builder.add_meal()
+        self.builder.add_topping()
+        self.builder.prepare_botbread()
+
+class RichPiz(Builder):
+    def __init__(self):
+        self.piz = pizza("Богатая")
+    def add_sauce(self) -> None:
+        self.piz.souse = Product.souse[0]
+    def add_meal(self) -> None:
+        self.piz.meal = Product.meal[0]
+    def add_topping(self) -> None:
+        self.piz.topping.append(Product.nam[0])
+        self.piz.topping.append(Product.nam[1])
+    def prepare_botbread(self) -> None:
+        self.piz.botbread = Product.bread[0]
+    def get_bur(self) -> pizza:
+        return self.piz
+
+class DefaultPiz(Builder):
+    def __init__(self):
+        self.piz = pizza("Обычная")
+    def add_sauce(self) -> None:
+        self.piz.souse = Product.souse[1]
+    def add_meal(self) -> None:
+        self.piz.meal = Product.meal[1]
+    def add_topping(self) -> None:
+        self.piz.topping.append(Product.nam[0])
+    def prepare_botbread(self) -> None:
+        self.piz.botbread = Product.bread[1]
+    def get_bur(self) -> pizza:
+        return self.piz
+
+director = Director()
+print("Богатая-1, Обычная-2")
+a=int(input())
+if a==1:
+    builder = RichPiz()
+else:
+    builder = DefaultPiz()
+director.set_builder(builder)
+director.make_bur()
+burger = builder.get_bur()
+burger.printer()
+```
+
+### Адаптер
+```
+class intNum:
+    def geti(self):
+        return 123456
+
+class strNum:
+    def gets(self):
+        return "11111"
+
+class Adapter(intNum,strNum):
+    def get1(self):
+        return str(self.geti())
+    def get2(self):
+        return int(self.gets())
+
+work = Adapter()
+intwork=intNum()
+strwork=strNum()
+#print("Итог:" + intwork.geti()) Выдаст ошибку
+#print(intwork.geti()+strwork.gets()) Выдаст ошибку
+print("Итог:" + work.get1())
+print(work.get2()+intwork.geti())
+```
+
+### Посредник
+```
+class User():
+    def __init__(self, med, name, group):
+        self.mediator = med
+        self.name = name
+        self.group = group
+    def send(self, msg): pass
+    def send1(self, msg): pass
+    def send2(self, msg): pass
+    def receive(self, msg): pass
+
+class ChatMediator:
+    def __init__(self):
+        self.users = []
+    def add_user(self, user):
+        self.users.append(user)
+    def send_message(self, msg, user):
+        for u in self.users:
+            if u != user:
+                u.receive(msg)
+    def send_messageM(self,msg,user):
+        for u in self.users:
+            if u != user and u.group == "Biso-01":
+                u.receive(msg)
+    def send_messageW(self,msg,user):
+        for u in self.users:
+            if u != user and u.group == "Biso-02":
+                u.receive(msg)
+
+class ConcreteUser(User):
+    def send(self, msg):
+        print(self.name + ": Отправил сообщение: " + msg)
+        self.mediator.send_message(msg, self)
+    def send1(self, msg):
+        print(self.name + ": Отправил БИСО-01: " + msg)
+        self.mediator.send_messageM(msg, self)
+    def send2(self, msg):
+        print(self.name + ": Отправил БИСО-02: " + msg)
+        self.mediator.send_messageW(msg, self)
+    def receive(self, msg):
+        print(self.name + ": Получено сообщение: " + msg)
+
+def printl():
+    print("-" * 50)
+
+mediator = ChatMediator()
+user1 = ConcreteUser(mediator, "Мария", "Biso-01")
+user2 = ConcreteUser(mediator, "Иван", "Biso-01")
+user3 = ConcreteUser(mediator, "Руслан", "Biso-02")
+user4 = ConcreteUser(mediator, "Илья", "Biso-02")
+
+mediator.add_user(user1)
+mediator.add_user(user2)
+mediator.add_user(user3)
+mediator.add_user(user4)
+
+user1.send("Привет всем")
+printl()
+user1.send1("Привет БИСО-01")
+printl()
+user1.send2("Привет БИСО-02")
+printl()
+```
